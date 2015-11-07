@@ -8,12 +8,16 @@ import javax.jws.WebService;
 public interface JSTABanken {
     String sayHi(String text);
     @WebMethod(operationName="createCustomer")
-    boolean createCustomer(@WebParam(name="name") String name);
+    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault;
     @WebMethod(operationName="insertMoney")
-    boolean insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount);
+    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound;
     @WebMethod(operationName="withdrawMoney")
-    boolean withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount);
+    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault;
     @WebMethod(operationName="getBalance")
-    float getBalance(@WebParam(name="name") String name);
+    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound;
+    @WebMethod(operationName="getCustomers")
+    Customer[] getCusomers() throws NoCustomerFound;
+    @WebMethod(operationName="robTheBank")
+    void robTheBank();
 }
 

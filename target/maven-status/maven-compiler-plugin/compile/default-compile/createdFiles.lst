@@ -1,3 +1,7 @@
 se/jsta/banken/DBHelper.class
+se/jsta/banken/InsufficientBalanceFault.class
 se/jsta/banken/JSTABanken.class
 se/jsta/banken/JSTABankenImpl.class
+se/jsta/banken/NoCustomerFound.class
+se/jsta/banken/Customer.class
+se/jsta/banken/CustomerExistsFault.class

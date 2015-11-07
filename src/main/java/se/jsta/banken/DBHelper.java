@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBHelper {
 	private static String dbConnectionName = "jdbc:sqlite:jstabanken.db";
@@ -153,23 +155,22 @@ public class DBHelper {
 	  }
 	  
 	  
-	  public static boolean createCustomer(String name){
+	  public static Customer createCustomer(String name) throws CustomerExistsFault{
 		  if(isCustomerExist(name)){
-			  return false;
+			  throw new CustomerExistsFault();
 		  }
 		  int index = getNextId();
 	      executeUpdate("INSERT INTO CUSTOMERS (ID,NAME,BALANCE) " +
                   "VALUES ("+ index +", '"+ name +"', 0);");
-	      return true;
+	      return new Customer(name, 0);
 	  }
 	  
-	  public static float getBalance(String name){
+	  public static Customer getBalance(String name) throws NoCustomerFound{
 	      System.out.println("Getting balance for " + name);
 
 		  if(!isCustomerExist(name)){
 		      System.out.println("Could not find the customer");
-
-			  return -1;
+		      throw new NoCustomerFound();
 		  }
 		  Connection c = null;
 		    Statement stmt = null;
@@ -189,22 +190,53 @@ public class DBHelper {
 		      rs.close();
 		      stmt.close();
 		      c.close();
-		      return balance;
+		      return new Customer(name, balance);
 		    } catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
 		      System.exit(0);
 		    }
 		    System.out.println("Operation done successfully");
-		    return -1;
+		    throw new NoCustomerFound();
 	  }
 	
-	 public static boolean setBalance(String name, float balance){
+	 public static Customer setBalance(String name, float balance) throws NoCustomerFound{
 		 if(!isCustomerExist(name)){
-			 return false;
-		 }
+			 throw new NoCustomerFound();
+			 }
 		 
 		 executeUpdate("UPDATE CUSTOMERS set balance = "+ balance + " where NAME = '"+name+"';");
-		 return true;
+		 return new Customer(name, balance);
+	 }
+	 
+	 public static Customer[] getCustomers() throws NoCustomerFound
+	 {
+	      System.out.println("Getting all customers");
+		  Connection c = null;
+		    Statement stmt = null;
+		    try {
+		      Class.forName("org.sqlite.JDBC");
+		      c = DriverManager.getConnection(dbConnectionName);
+		      c.setAutoCommit(false);
+		      System.out.println("Opened database successfully");
+
+		      stmt = c.createStatement();
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM CUSTOMERS;" );
+		      List<Customer> customers = new ArrayList<Customer>();
+		      while ( rs.next() ) {
+		    	 String name = rs.getString("name");
+		    	 float balance = rs.getFloat("balance");
+		    	 customers.add(new Customer(name, balance));
+		      }
+		      rs.close();
+		      stmt.close();
+		      c.close();
+		      return (Customer[]) customers.toArray(new Customer[customers.size()]);
+		    } catch ( Exception e ) {
+		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+		      System.exit(0);
+		    }
+		    System.out.println("Operation done successfully");
+		    throw new NoCustomerFound();
 	 }
 
 	

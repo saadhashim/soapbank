@@ -1,6 +1,10 @@
 
 package se.jsta.banken;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.jws.WebParam;
 import javax.jws.WebService;
 
 @WebService(endpointInterface = "se.jsta.banken.JSTABanken")
@@ -11,38 +15,48 @@ public class JSTABankenImpl implements JSTABanken {
 		return "Hello " + text;
 	}
 
-	public boolean createCustomer(String name) {
+	public Customer createCustomer(String name) throws CustomerExistsFault {
 		DBHelper.initDB();
 		return DBHelper.createCustomer(name);
 	}
 
-	public boolean insertMoney(String name, float amount) {
+	public Customer insertMoney(String name, float amount) throws NoCustomerFound {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
-			return false;
+			return null;
 		}
-		float balance = DBHelper.getBalance(name);
+		float balance = DBHelper.getBalance(name).getBalance();
 		return DBHelper.setBalance(name, balance + amount);
 	}
 
-	public boolean withdrawMoney(String name, float amount) {
+	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
-			return false;
+			throw new IllegalArgumentException("Beloppet är inte ett positivt tal");
 		}
-		float balance = DBHelper.getBalance(name);
+		float balance = DBHelper.getBalance(name).getBalance();
 		if (balance - amount < 0) {
-			return false;
+			throw new InsufficientBalanceFault();
 		}
 		return DBHelper.setBalance(name, balance - amount);
 
 	}
 
-	public float getBalance(String name) {
+	public Customer getBalance(String name) throws NoCustomerFound {
 		DBHelper.initDB();
 		return DBHelper.getBalance(name);
 	}
+	
+    public Customer[] getCusomers() throws NoCustomerFound{
+		DBHelper.initDB();
+		return DBHelper.getCustomers();
+    }
+
+    public void robTheBank(){
+    	throw new SecurityException("Polisen skjuter dig och du fortsätter testa manuellt i nästa liv");
+    }
+
 
 }

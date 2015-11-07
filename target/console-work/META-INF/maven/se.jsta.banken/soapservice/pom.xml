@@ -60,6 +60,7 @@
 								<goal>createconsole</goal>
 							</goals>
 							<configuration>
+                				<backgroundImage>${basedir}/banken.jpg</backgroundImage>
 								<additionalDependencies>
 									<additionalDependency>
 										<artifactId>jetty-console-jsp-plugin</artifactId>

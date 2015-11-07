@@ -1,3 +1,7 @@
+/Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/InsufficientBalanceFault.java
+/Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/Customer.java
+/Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/CustomerExistsFault.java
 /Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/DBHelper.java
 /Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/JSTABanken.java
 /Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/JSTABankenImpl.java
+/Users/saad/Documents/jsta/soap/soapservice/src/main/java/se/jsta/banken/NoCustomerFound.java
