@@ -2,10 +2,22 @@
 package se.jsta.banken;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
+import javax.annotation.Resource;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.naming.AuthenticationException;
+import javax.xml.ws.WebServiceContext;
+import javax.xml.ws.handler.MessageContext;
+
+import org.apache.cxf.headers.Header;
+import org.apache.cxf.helpers.CastUtils;
+import org.apache.cxf.jaxws.context.WrappedMessageContext;
+import org.apache.cxf.message.Message;
+import org.w3c.dom.Element;
 
 @WebService(endpointInterface = "se.jsta.banken.JSTABanken")
 public class JSTABankenImpl implements JSTABanken {
@@ -53,10 +65,55 @@ public class JSTABankenImpl implements JSTABanken {
 		DBHelper.initDB();
 		return DBHelper.getCustomers();
     }
+    
+    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException{
+    	if(!isAuthenticated()){
+    		throw new AuthenticationException("Du behöver rätt användarnamn och lösen");
+    	}
+    	
+		DBHelper.initDB();
+		return DBHelper.getCustomers();
+    }
 
     public void robTheBank(){
     	throw new SecurityException("Polisen skjuter dig och du fortsätter testa manuellt i nästa liv");
     }
+    
+    @Resource
+    WebServiceContext wsctx;
+    
+	private boolean isAuthenticated() {
+		MessageContext mctx = wsctx.getMessageContext();
+		Message message = ((WrappedMessageContext) mctx).getWrappedMessage();
+		List<Header> headers = CastUtils.cast((List<?>) message.get(Header.HEADER_LIST));
+		System.out.println("Number of headers: " + headers.size());
+		for (Iterator<Header> i = headers.iterator(); i.hasNext();) {
+			Header h = i.next();
+			Element n = (Element) h.getObject();
+			System.out.println("header name=" + n.getLocalName());
+			//System.out.println("header content=" + n.getTextContent());
+			if(n.getLocalName().contains("BasicAuth")){
+				String[] content = n.getTextContent().trim().split("\n");
+				if(content.length<2){
+					System.out.println("Too few rows");
+					return false;
+				}
+				
+				String username = content[content.length-2].trim();
+				String password = content[content.length-1].trim();
+				// Should validate username and password with database
+				if (username.equalsIgnoreCase("system") && password.equalsIgnoreCase("password")) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		}
+		System.out.println("No basic auth header");
 
+
+		return false;
+
+	}
 
 }

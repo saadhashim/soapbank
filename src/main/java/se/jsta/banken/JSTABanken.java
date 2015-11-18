@@ -3,6 +3,7 @@ package se.jsta.banken;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
+import javax.naming.AuthenticationException;
 
 @WebService
 public interface JSTABanken {
@@ -17,6 +18,8 @@ public interface JSTABanken {
     Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound;
     @WebMethod(operationName="getCustomers")
     Customer[] getCusomers() throws NoCustomerFound;
+    @WebMethod(operationName="getCustomersSecure")
+    Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException;
     @WebMethod(operationName="robTheBank")
     void robTheBank();
 }
