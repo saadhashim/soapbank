@@ -6,17 +6,18 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 import javafx.fxml.LoadException;
 
 public class DBHelper {
 	private static String dbConnectionName = "jdbc:sqlite:jstabanken.db";
 
-	public static void initDB() throws LoadException{
+	public static void initDB() throws TimeoutException{
 		createTableIfNotExist();
 	}
 	
-	public static void executeUpdate(String sql) throws LoadException{
+	public static void executeUpdate(String sql) throws TimeoutException{
 		Connection c = null;
 	    Statement stmt = null;
 	    try {
@@ -36,13 +37,13 @@ public class DBHelper {
 	      }catch(Exception ee){
 	    	  
 	      }finally{
-	    	  throw new LoadException("Databasen hinner inte med");
+	    	  throw new TimeoutException("Databasen hinner inte med");
 	      }
 	    }
 	    System.out.println("SQL executed created successfully");
 	}
 	
-	private static void createTableIfNotExist() throws LoadException{
+	private static void createTableIfNotExist() throws TimeoutException{
 		if(!isTableAlreadyCreted()){
 			  Connection c = null;
 			    Statement stmt = null;
@@ -71,7 +72,7 @@ public class DBHelper {
 			      }catch(Exception ee){
 			    	  
 			      }finally{
-			    	  throw new LoadException("Databasen hinner inte med");
+			    	  throw new TimeoutException("Databasen hinner inte med");
 			      }
 			    }
 			    System.out.println("Table created successfully");
@@ -79,7 +80,7 @@ public class DBHelper {
 	}
 	
 	
-	  private static boolean isTableAlreadyCreted() throws LoadException
+	  private static boolean isTableAlreadyCreted() throws TimeoutException
 	  {
 	    Connection c = null;
 	    Statement stmt = null;
@@ -106,12 +107,12 @@ public class DBHelper {
 	      }catch(Exception ee){
 	    	  
 	      }finally{
-	    	  throw new LoadException("Databasen hinner inte med");
+	    	  throw new TimeoutException("Databasen hinner inte med");
 	      }
 	    }
 	  }
 	  
-	  private static int getNextId() throws LoadException{
+	  private static int getNextId() throws TimeoutException{
 	      System.out.println("Getting the next id");
 
 		   Connection c = null;
@@ -142,11 +143,11 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new LoadException("Databasen hinner inte med");
+		    	  throw new TimeoutException("Databasen hinner inte med");
 		      }
 	  }
 	  
-	  private static boolean isCustomerExist(String name) throws LoadException{
+	  private static boolean isCustomerExist(String name) throws TimeoutException{
 	      System.out.println("Checking if customer exist");
 		  Connection c = null;
 		    Statement stmt = null;
@@ -177,13 +178,13 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new LoadException("Databasen hinner inte med");
+		    	  throw new TimeoutException("Databasen hinner inte med");
 		      }
 		    }
 	  }
 	  
 	  
-	  public static Customer createCustomer(String name) throws CustomerExistsFault, LoadException{
+	  public static Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException{
 		  if(isCustomerExist(name)){
 			  throw new CustomerExistsFault();
 		  }
@@ -193,7 +194,7 @@ public class DBHelper {
 	      return new Customer(name, 0);
 	  }
 	  
-	  public static Customer getBalance(String name) throws NoCustomerFound, LoadException{
+	  public static Customer getBalance(String name) throws NoCustomerFound, TimeoutException{
 	      System.out.println("Getting balance for " + name);
 
 		  if(!isCustomerExist(name)){
@@ -227,7 +228,7 @@ public class DBHelper {
 		    throw new NoCustomerFound();
 	  }
 	
-	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, LoadException{
+	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, TimeoutException{
 		 if(!isCustomerExist(name)){
 			 throw new NoCustomerFound();
 			 }
@@ -236,7 +237,7 @@ public class DBHelper {
 		 return new Customer(name, balance);
 	 }
 	 
-	 public static Customer[] getCustomers() throws NoCustomerFound, LoadException
+	 public static Customer[] getCustomers() throws NoCustomerFound, TimeoutException
 	 {
 	      System.out.println("Getting all customers");
 		  Connection c = null;
@@ -266,7 +267,7 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new LoadException("Databasen hinner inte med");
+		    	  throw new TimeoutException("Databasen hinner inte med");
 		      }
 		    }
 	 }

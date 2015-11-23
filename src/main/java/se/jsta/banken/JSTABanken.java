@@ -1,5 +1,7 @@
 package se.jsta.banken;
 
+import java.util.concurrent.TimeoutException;
+
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -9,19 +11,19 @@ import javafx.fxml.LoadException;
 
 @WebService
 public interface JSTABanken {
-    String sayHi(String text) throws LoadException;
+    String sayHi(String text) throws TimeoutException;
     @WebMethod(operationName="createCustomer")
-    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, LoadException;
+    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, TimeoutException;
     @WebMethod(operationName="insertMoney")
-    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound, LoadException;
+    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound, TimeoutException;
     @WebMethod(operationName="withdrawMoney")
-    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault, LoadException;
+    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException;
     @WebMethod(operationName="getBalance")
-    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound, LoadException;
+    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound, TimeoutException;
     @WebMethod(operationName="getCustomers")
-    Customer[] getCusomers() throws NoCustomerFound, LoadException;
+    Customer[] getCusomers() throws NoCustomerFound, TimeoutException;
     @WebMethod(operationName="getCustomersSecure")
-    Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, LoadException;
+    Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, TimeoutException;
     @WebMethod(operationName="robTheBank")
     void robTheBank();
 }

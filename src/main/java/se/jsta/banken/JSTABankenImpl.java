@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jws.WebParam;
@@ -24,17 +25,17 @@ import javafx.fxml.LoadException;
 @WebService(endpointInterface = "se.jsta.banken.JSTABanken")
 public class JSTABankenImpl implements JSTABanken {
 
-	public String sayHi(String text) throws LoadException {
+	public String sayHi(String text) throws TimeoutException {
 		DBHelper.initDB();
 		return "Hello " + text;
 	}
 
-	public Customer createCustomer(String name) throws CustomerExistsFault, LoadException {
+	public Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException {
 		DBHelper.initDB();
 		return DBHelper.createCustomer(name);
 	}
 
-	public Customer insertMoney(String name, float amount) throws NoCustomerFound, LoadException {
+	public Customer insertMoney(String name, float amount) throws NoCustomerFound, TimeoutException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -44,7 +45,7 @@ public class JSTABankenImpl implements JSTABanken {
 		return DBHelper.setBalance(name, balance + amount);
 	}
 
-	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, LoadException {
+	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -58,17 +59,17 @@ public class JSTABankenImpl implements JSTABanken {
 
 	}
 
-	public Customer getBalance(String name) throws NoCustomerFound, LoadException {
+	public Customer getBalance(String name) throws NoCustomerFound, TimeoutException {
 		DBHelper.initDB();
 		return DBHelper.getBalance(name);
 	}
 	
-    public Customer[] getCusomers() throws NoCustomerFound, LoadException{
+    public Customer[] getCusomers() throws NoCustomerFound, TimeoutException{
 		DBHelper.initDB();
 		return DBHelper.getCustomers();
     }
     
-    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, LoadException{
+    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, TimeoutException{
     	if(!isAuthenticated()){
     		throw new AuthenticationException("Du behöver rätt användarnamn och lösen");
     	}
