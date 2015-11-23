@@ -7,14 +7,16 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javafx.fxml.LoadException;
+
 public class DBHelper {
 	private static String dbConnectionName = "jdbc:sqlite:jstabanken.db";
 
-	public static void initDB(){
+	public static void initDB() throws LoadException{
 		createTableIfNotExist();
 	}
 	
-	public static void executeUpdate(String sql){
+	public static void executeUpdate(String sql) throws LoadException{
 		Connection c = null;
 	    Statement stmt = null;
 	    try {
@@ -29,12 +31,18 @@ public class DBHelper {
 	      c.close();
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	      try{
+	    	  c.close();
+	      }catch(Exception ee){
+	    	  
+	      }finally{
+	    	  throw new LoadException("Databasen hinner inte med");
+	      }
 	    }
 	    System.out.println("SQL executed created successfully");
 	}
 	
-	private static void createTableIfNotExist(){
+	private static void createTableIfNotExist() throws LoadException{
 		if(!isTableAlreadyCreted()){
 			  Connection c = null;
 			    Statement stmt = null;
@@ -58,14 +66,20 @@ public class DBHelper {
 		                   "VALUES (2, 'Rickard', 20055.2);");
 			    } catch ( Exception e ) {
 			      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-			      System.exit(0);
+			      try{
+			    	  c.close();
+			      }catch(Exception ee){
+			    	  
+			      }finally{
+			    	  throw new LoadException("Databasen hinner inte med");
+			      }
 			    }
 			    System.out.println("Table created successfully");
 		}
 	}
 	
 	
-	  private static boolean isTableAlreadyCreted()
+	  private static boolean isTableAlreadyCreted() throws LoadException
 	  {
 	    Connection c = null;
 	    Statement stmt = null;
@@ -87,13 +101,17 @@ public class DBHelper {
 	      return exist;
 	    } catch ( Exception e ) {
 	      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-	      System.exit(0);
+	      try{
+	    	  c.close();
+	      }catch(Exception ee){
+	    	  
+	      }finally{
+	    	  throw new LoadException("Databasen hinner inte med");
+	      }
 	    }
-	    System.out.println("Operation done successfully");
-	    return false;
 	  }
 	  
-	  private static int getNextId(){
+	  private static int getNextId() throws LoadException{
 	      System.out.println("Getting the next id");
 
 		   Connection c = null;
@@ -119,10 +137,16 @@ public class DBHelper {
 		      System.exit(0);
 		    }
 		    System.out.println("Operation done successfully");
-		    return 0;
+		      try{
+		    	  c.close();
+		      }catch(Exception ee){
+		    	  
+		      }finally{
+		    	  throw new LoadException("Databasen hinner inte med");
+		      }
 	  }
 	  
-	  private static boolean isCustomerExist(String name){
+	  private static boolean isCustomerExist(String name) throws LoadException{
 	      System.out.println("Checking if customer exist");
 		  Connection c = null;
 		    Statement stmt = null;
@@ -148,14 +172,18 @@ public class DBHelper {
 		      return exist;
 		    } catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
+		      try{
+		    	  c.close();
+		      }catch(Exception ee){
+		    	  
+		      }finally{
+		    	  throw new LoadException("Databasen hinner inte med");
+		      }
 		    }
-		    System.out.println("Operation done successfully");
-		    return false;
 	  }
 	  
 	  
-	  public static Customer createCustomer(String name) throws CustomerExistsFault{
+	  public static Customer createCustomer(String name) throws CustomerExistsFault, LoadException{
 		  if(isCustomerExist(name)){
 			  throw new CustomerExistsFault();
 		  }
@@ -165,7 +193,7 @@ public class DBHelper {
 	      return new Customer(name, 0);
 	  }
 	  
-	  public static Customer getBalance(String name) throws NoCustomerFound{
+	  public static Customer getBalance(String name) throws NoCustomerFound, LoadException{
 	      System.out.println("Getting balance for " + name);
 
 		  if(!isCustomerExist(name)){
@@ -199,7 +227,7 @@ public class DBHelper {
 		    throw new NoCustomerFound();
 	  }
 	
-	 public static Customer setBalance(String name, float balance) throws NoCustomerFound{
+	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, LoadException{
 		 if(!isCustomerExist(name)){
 			 throw new NoCustomerFound();
 			 }
@@ -208,7 +236,7 @@ public class DBHelper {
 		 return new Customer(name, balance);
 	 }
 	 
-	 public static Customer[] getCustomers() throws NoCustomerFound
+	 public static Customer[] getCustomers() throws NoCustomerFound, LoadException
 	 {
 	      System.out.println("Getting all customers");
 		  Connection c = null;
@@ -233,10 +261,14 @@ public class DBHelper {
 		      return (Customer[]) customers.toArray(new Customer[customers.size()]);
 		    } catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
+		      try{
+		    	  c.close();
+		      }catch(Exception ee){
+		    	  
+		      }finally{
+		    	  throw new LoadException("Databasen hinner inte med");
+		      }
 		    }
-		    System.out.println("Operation done successfully");
-		    throw new NoCustomerFound();
 	 }
 
 	

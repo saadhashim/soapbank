@@ -19,20 +19,22 @@ import org.apache.cxf.jaxws.context.WrappedMessageContext;
 import org.apache.cxf.message.Message;
 import org.w3c.dom.Element;
 
+import javafx.fxml.LoadException;
+
 @WebService(endpointInterface = "se.jsta.banken.JSTABanken")
 public class JSTABankenImpl implements JSTABanken {
 
-	public String sayHi(String text) {
+	public String sayHi(String text) throws LoadException {
 		DBHelper.initDB();
 		return "Hello " + text;
 	}
 
-	public Customer createCustomer(String name) throws CustomerExistsFault {
+	public Customer createCustomer(String name) throws CustomerExistsFault, LoadException {
 		DBHelper.initDB();
 		return DBHelper.createCustomer(name);
 	}
 
-	public Customer insertMoney(String name, float amount) throws NoCustomerFound {
+	public Customer insertMoney(String name, float amount) throws NoCustomerFound, LoadException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -42,7 +44,7 @@ public class JSTABankenImpl implements JSTABanken {
 		return DBHelper.setBalance(name, balance + amount);
 	}
 
-	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault {
+	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, LoadException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -56,17 +58,17 @@ public class JSTABankenImpl implements JSTABanken {
 
 	}
 
-	public Customer getBalance(String name) throws NoCustomerFound {
+	public Customer getBalance(String name) throws NoCustomerFound, LoadException {
 		DBHelper.initDB();
 		return DBHelper.getBalance(name);
 	}
 	
-    public Customer[] getCusomers() throws NoCustomerFound{
+    public Customer[] getCusomers() throws NoCustomerFound, LoadException{
 		DBHelper.initDB();
 		return DBHelper.getCustomers();
     }
     
-    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException{
+    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, LoadException{
     	if(!isAuthenticated()){
     		throw new AuthenticationException("Du behöver rätt användarnamn och lösen");
     	}
