@@ -30,22 +30,22 @@ public class JSTABankenImpl implements JSTABanken {
 		return "Hello " + text;
 	}
 
-	public Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException {
+	public Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException {
 		DBHelper.initDB();
 		return DBHelper.createCustomer(name);
 	}
 
-	public Customer insertMoney(String name, float amount) throws NoCustomerFound, TimeoutException {
+	public Customer insertMoney(String name, float amount) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
-			return null;
+			throw new IllegalArgumentException("Beloppet är inte ett positivt tal");
 		}
 		float balance = DBHelper.getBalance(name).getBalance();
 		return DBHelper.setBalance(name, balance + amount);
 	}
 
-	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException {
+	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException, NullOrEmptyValueException {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -59,7 +59,7 @@ public class JSTABankenImpl implements JSTABanken {
 
 	}
 
-	public Customer getBalance(String name) throws NoCustomerFound, TimeoutException {
+	public Customer getBalance(String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException {
 		DBHelper.initDB();
 		return DBHelper.getBalance(name);
 	}

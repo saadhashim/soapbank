@@ -13,13 +13,13 @@ import javafx.fxml.LoadException;
 public interface JSTABanken {
     String sayHi(String text) throws TimeoutException;
     @WebMethod(operationName="createCustomer")
-    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, TimeoutException;
+    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException;
     @WebMethod(operationName="insertMoney")
-    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound, TimeoutException;
+    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException;
     @WebMethod(operationName="withdrawMoney")
-    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException;
+    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException, NullOrEmptyValueException;
     @WebMethod(operationName="getBalance")
-    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound, TimeoutException;
+    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException;
     @WebMethod(operationName="getCustomers")
     Customer[] getCusomers() throws NoCustomerFound, TimeoutException;
     @WebMethod(operationName="getCustomersSecure")

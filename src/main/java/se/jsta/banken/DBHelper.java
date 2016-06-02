@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
+import com.oracle.jrockit.jfr.InvalidValueException;
+
 import javafx.fxml.LoadException;
 
 public class DBHelper {
@@ -135,9 +137,6 @@ public class DBHelper {
 		      return lastIndex + 1;
 		    } catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
-		    }
-		    System.out.println("Operation done successfully");
 		      try{
 		    	  c.close();
 		      }catch(Exception ee){
@@ -145,9 +144,14 @@ public class DBHelper {
 		      }finally{
 		    	  throw new TimeoutException("Databasen hinner inte med");
 		      }
+		    }
+
 	  }
 	  
-	  private static boolean isCustomerExist(String name) throws TimeoutException{
+	  private static boolean isCustomerExist(String name) throws TimeoutException, NullOrEmptyValueException{
+		  if(name == null || name.isEmpty()){
+			  throw new NullOrEmptyValueException();
+		  }
 	      System.out.println("Checking if customer exist");
 		  Connection c = null;
 		    Statement stmt = null;
@@ -184,7 +188,10 @@ public class DBHelper {
 	  }
 	  
 	  
-	  public static Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException{
+	  public static Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException{
+		  if(name == null || name.isEmpty()){
+			  throw new NullOrEmptyValueException();
+		  }
 		  if(isCustomerExist(name)){
 			  throw new CustomerExistsFault();
 		  }
@@ -194,7 +201,11 @@ public class DBHelper {
 	      return new Customer(name, 0);
 	  }
 	  
-	  public static Customer getBalance(String name) throws NoCustomerFound, TimeoutException{
+	  public static Customer getBalance(String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException{
+		  if(name == null || name.isEmpty()){
+			  throw new NullOrEmptyValueException();
+		  }
+		  
 	      System.out.println("Getting balance for " + name);
 
 		  if(!isCustomerExist(name)){
@@ -222,13 +233,20 @@ public class DBHelper {
 		      return new Customer(name, balance);
 		    } catch ( Exception e ) {
 		      System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-		      System.exit(0);
+		      try{
+		    	  c.close();
+		      }catch(Exception ee){
+		    	  
+		      }finally{
+		    	  throw new TimeoutException("Databasen hinner inte med");
+		      }
 		    }
-		    System.out.println("Operation done successfully");
-		    throw new NoCustomerFound();
 	  }
 	
-	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, TimeoutException{
+	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException{
+		  if(name == null || name.isEmpty()){
+			  throw new NullOrEmptyValueException();
+		  }
 		 if(!isCustomerExist(name)){
 			 throw new NoCustomerFound();
 			 }
