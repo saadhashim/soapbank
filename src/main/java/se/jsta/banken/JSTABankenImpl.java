@@ -37,6 +37,7 @@ public class JSTABankenImpl implements JSTABanken {
 
 	public Customer insertMoney(String name, float amount) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException {
 		DBHelper.initDB();
+		
 
 		if (amount <= 0) {
 			throw new IllegalArgumentException("Beloppet är inte ett positivt tal");

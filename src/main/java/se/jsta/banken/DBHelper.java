@@ -267,7 +267,7 @@ public class DBHelper {
 		      System.out.println("Opened database successfully");
 
 		      stmt = c.createStatement();
-		      ResultSet rs = stmt.executeQuery( "SELECT * FROM CUSTOMERS;" );
+		      ResultSet rs = stmt.executeQuery( "SELECT * FROM CUSTOMERS order by id desc;" );
 		      List<Customer> customers = new ArrayList<Customer>();
 		      while ( rs.next() ) {
 		    	 String name = rs.getString("name");
