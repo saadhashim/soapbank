@@ -1,4 +1,5 @@
 se/jsta/banken/DBHelper.class
+se/jsta/banken/NullOrEmptyValueException.class
 se/jsta/banken/InsufficientBalanceFault.class
 se/jsta/banken/JSTABanken.class
 se/jsta/banken/JSTABankenImpl.class
