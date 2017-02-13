@@ -9,9 +9,9 @@ För att köra banken:
 
 2. För att bygga efter ändringar kör följande från rooten av repot: mvn clean install
 
-3. För att köra tjänsten gå till target mappen och kör: java -jar soapservice-1.0-SNAPSHOT-jetty-console.war 
+3. För att köra tjänsten gå till target mappen och kör: java -jar soapservice-1.0-SNAPSHOT-jetty-console.war
 
-4. Du får en app där du kan välja port och starta servicen 
+4. Du får en app där du kan välja port och starta servicen
 
 Nu har du en soaptjänst med addressen:
 http://localhost:8080/JSTABanken?wsdl
@@ -31,14 +31,13 @@ To run the bank:
 
 2. To build changes go to the project root and run: mvn clean install
 
-3. To run the service run: java -jar soapservice-1.0-SNAPSHOT-jetty-console.war 
+3. To run the service run: java -jar soapservice-1.0-SNAPSHOT-jetty-console.war
 
-4. You will start the app and can choose on which port you want to start the Soap service 
+4. You will start the app and can choose on which port you want to start the Soap service
 
 Now you have a Soap service with the address:
 http://localhost:8080/JSTABanken?wsdl
 
 The database used by the bank is a file that will be created where you execute the war file. The file name is jstabanken.db. The database is an sqlite database. 
 
-For cources in SoapUI and test automation go to http://jsta.se
-
+For courses in SoapUI and test automation go to http://jsta.se
