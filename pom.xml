@@ -58,11 +58,11 @@
                     <artifactId>jetty-maven-plugin</artifactId>
                     <version>9.3.7.v20160115</version>
                 </plugin>
-				<plugin>
-					<groupId>com.google.appengine</groupId>
-					<artifactId>appengine-maven-plugin</artifactId>
-					<version>1.9.48</version>
-				</plugin>
+                <plugin>
+                    <groupId>com.google.cloud.tools</groupId>
+                    <artifactId>appengine-maven-plugin</artifactId>
+                    <version>LATEST</version>
+                </plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-compiler-plugin</artifactId>
