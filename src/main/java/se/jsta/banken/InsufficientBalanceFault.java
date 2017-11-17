@@ -2,6 +2,6 @@ package se.jsta.banken;
 
 public class InsufficientBalanceFault extends Exception {
     public InsufficientBalanceFault() {
-        super("Det finns för lite pengar", new IllegalArgumentException("Det finns för lite pengar"));
+        super("The balance is too low", new IllegalArgumentException("The balance is too low"));
     }
 }

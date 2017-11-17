@@ -1,14 +1,11 @@
 
 package se.jsta.banken;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.naming.AuthenticationException;
 import javax.xml.ws.WebServiceContext;
@@ -20,10 +17,8 @@ import org.apache.cxf.jaxws.context.WrappedMessageContext;
 import org.apache.cxf.message.Message;
 import org.w3c.dom.Element;
 
-import javafx.fxml.LoadException;
-
-@WebService(endpointInterface = "se.jsta.banken.JSTABanken")
-public class JSTABankenImpl implements JSTABanken {
+@WebService(endpointInterface = "se.jsta.banken.SoapBank")
+public class SoapBankImpl implements SoapBank {
 
 	public String sayHi(String text) throws TimeoutException {
 		DBHelper.initDB();
@@ -40,7 +35,7 @@ public class JSTABankenImpl implements JSTABanken {
 		
 
 		if (amount <= 0) {
-			throw new IllegalArgumentException("Beloppet är inte ett positivt tal");
+			throw new IllegalArgumentException("The amount should be positive");
 		}
 		float balance = DBHelper.getBalance(name).getBalance();
 		return DBHelper.setBalance(name, balance + amount);
@@ -50,7 +45,7 @@ public class JSTABankenImpl implements JSTABanken {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
-			throw new IllegalArgumentException("Beloppet är inte ett positivt tal");
+			throw new IllegalArgumentException("The amount should be positive");
 		}
 		float balance = DBHelper.getBalance(name).getBalance();
 		if (balance - amount < 0) {
@@ -72,7 +67,7 @@ public class JSTABankenImpl implements JSTABanken {
     
     public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, TimeoutException{
     	if(!isAuthenticated()){
-    		throw new AuthenticationException("Du behöver rätt användarnamn och lösen");
+    		throw new AuthenticationException("Wrong username or password");
     	}
     	
 		DBHelper.initDB();
@@ -80,7 +75,7 @@ public class JSTABankenImpl implements JSTABanken {
     }
 
     public void robTheBank(){
-    	throw new SecurityException("Polisen skjuter dig och du fortsätter testa manuellt i nästa liv");
+    	throw new SecurityException("You get shot by the police and spend your life testing manually");
     }
     
     @Resource

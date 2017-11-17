@@ -8,12 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.oracle.jrockit.jfr.InvalidValueException;
-
-import javafx.fxml.LoadException;
-
 public class DBHelper {
-	private static String dbConnectionName = "jdbc:sqlite:jstabanken.db";
+	private static String dbConnectionName = "jdbc:sqlite:bank.db";
 
 	public static void initDB() throws TimeoutException{
 		createTableIfNotExist();

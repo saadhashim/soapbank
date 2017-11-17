@@ -10,7 +10,7 @@
 
         <jaxws:endpoint 
           id="jstabanken" 
-          implementor="se.jsta.banken.JSTABankenImpl" 
-          address="/JSTABanken" />
+          implementor="se.jsta.banken.SoapBankImpl"
+          address="/SoapBank" />
           
 </beans>

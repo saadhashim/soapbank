@@ -7,10 +7,8 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.naming.AuthenticationException;
 
-import javafx.fxml.LoadException;
-
 @WebService
-public interface JSTABanken {
+public interface SoapBank {
     String sayHi(String text) throws TimeoutException;
     @WebMethod(operationName="createCustomer")
     Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException;
