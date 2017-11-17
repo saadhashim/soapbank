@@ -12,11 +12,12 @@
 		<spring.version>3.2.6.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<jetty.version>6.1.10</jetty.version>
-		<compiler.srcversion>1.6</compiler.srcversion>
-		<compiler.tgtversion>1.6</compiler.tgtversion>
+		<compiler.srcversion>1.8</compiler.srcversion>
+		<compiler.tgtversion>1.8</compiler.tgtversion>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<port.number>8080</port.number>
+		<port.number>8085</port.number>
+        <jetty.port>8888</jetty.port>
 	</properties>
 
 	<dependencies>
@@ -50,28 +51,16 @@
 
 	<build>		
 			<plugins>
-					<plugin>
-					<groupId>org.simplericity.jettyconsole</groupId>
-					<artifactId>jetty-console-maven-plugin</artifactId>
-					<version>1.57</version>
-					<executions>
-						<execution>
-							<goals>
-								<goal>createconsole</goal>
-							</goals>
-							<configuration>
-                				<backgroundImage>${basedir}/banken.jpg</backgroundImage>
-								<additionalDependencies>
-									<additionalDependency>
-										<artifactId>jetty-console-jsp-plugin</artifactId>
-									</additionalDependency>
-									<additionalDependency>
-										<artifactId>jetty-console-startstop-plugin</artifactId>
-									</additionalDependency>
-								</additionalDependencies>
-							</configuration>
-						</execution>
-					</executions>
+
+                <plugin>
+                    <groupId>org.eclipse.jetty</groupId>
+                    <artifactId>jetty-maven-plugin</artifactId>
+                    <version>9.3.7.v20160115</version>
+                </plugin>
+				<plugin>
+					<groupId>com.google.appengine</groupId>
+					<artifactId>appengine-maven-plugin</artifactId>
+					<version>1.9.48</version>
 				</plugin>
 			
 				<plugin>
@@ -82,7 +71,6 @@
 						<target>${compiler.tgtversion}</target>
 					</configuration>
 				</plugin>
-
 
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
