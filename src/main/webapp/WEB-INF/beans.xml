@@ -9,8 +9,8 @@
         <import resource="classpath:META-INF/cxf/cxf.xml" />
 
         <jaxws:endpoint 
-          id="soapBank"
+          id="soapbank"
           implementor="se.jsta.banken.SoapBankImpl"
-          address="/SoapBank" />
+          address="/soapbank" />
           
 </beans>
