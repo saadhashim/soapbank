@@ -3,11 +3,9 @@ package se.jsta.banken;
 
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 import javax.annotation.Resource;
 import javax.jws.WebService;
-import javax.naming.AuthenticationException;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
 
@@ -20,17 +18,17 @@ import org.w3c.dom.Element;
 @WebService(endpointInterface = "se.jsta.banken.soapbank")
 public class SoapBankImpl implements SoapBank {
 
-	public String sayHi(String text) throws TimeoutException {
+	public String sayHi(String text) throws Exception {
 		DBHelper.initDB();
 		return "Hello " + text;
 	}
 
-	public Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException {
+	public Customer createCustomer(String name) throws Exception {
 		DBHelper.initDB();
 		return DBHelper.createCustomer(name);
 	}
 
-	public Customer insertMoney(String name, float amount) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException {
+	public Customer insertMoney(String name, float amount) throws Exception{
 		DBHelper.initDB();
 		
 
@@ -41,7 +39,7 @@ public class SoapBankImpl implements SoapBank {
 		return DBHelper.setBalance(name, balance + amount);
 	}
 
-	public Customer withdrawMoney(String name, float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException, NullOrEmptyValueException {
+	public Customer withdrawMoney(String name, float amount) throws Exception {
 		DBHelper.initDB();
 
 		if (amount <= 0) {
@@ -55,19 +53,19 @@ public class SoapBankImpl implements SoapBank {
 
 	}
 
-	public Customer getBalance(String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException {
+	public Customer getBalance(String name) throws Exception {
 		DBHelper.initDB();
 		return DBHelper.getBalance(name);
 	}
 	
-    public Customer[] getCusomers() throws NoCustomerFound, TimeoutException{
+    public Customer[] getCusomers() throws Exception{
 		DBHelper.initDB();
 		return DBHelper.getCustomers();
     }
     
-    public Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, TimeoutException{
+    public Customer[] getCusomersSecure() throws Exception {
     	if(!isAuthenticated()){
-    		throw new AuthenticationException("Wrong username or password");
+    		throw new Exception("Wrong username or password");
     	}
     	
 		DBHelper.initDB();

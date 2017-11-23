@@ -9,19 +9,19 @@ import javax.naming.AuthenticationException;
 
 @WebService
 public interface SoapBank {
-    String sayHi(String text) throws TimeoutException;
+    String sayHi(String text) throws Exception;
     @WebMethod(operationName="createCustomer")
-    Customer createCustomer(@WebParam(name="name") String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException;
+    Customer createCustomer(@WebParam(name="name") String name) throws Exception;
     @WebMethod(operationName="insertMoney")
-    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException;
+    Customer insertMoney(@WebParam(name="name") String name, @WebParam(name="amount") float amount) throws Exception;
     @WebMethod(operationName="withdrawMoney")
-    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws NoCustomerFound, InsufficientBalanceFault, TimeoutException, NullOrEmptyValueException;
+    Customer withdrawMoney(@WebParam(name="name") String name,@WebParam(name="amount") float amount) throws  Exception;
     @WebMethod(operationName="getBalance")
-    Customer getBalance(@WebParam(name="name") String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException;
+    Customer getBalance(@WebParam(name="name") String name) throws Exception;
     @WebMethod(operationName="getCustomers")
-    Customer[] getCusomers() throws NoCustomerFound, TimeoutException;
+    Customer[] getCusomers() throws NoCustomerFound, Exception;
     @WebMethod(operationName="getCustomersSecure")
-    Customer[] getCusomersSecure() throws NoCustomerFound, AuthenticationException, TimeoutException;
+    Customer[] getCusomersSecure() throws Exception;
     @WebMethod(operationName="robTheBank")
     void robTheBank();
 }
