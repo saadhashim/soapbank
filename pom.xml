@@ -12,8 +12,8 @@
 		<spring.version>3.2.6.RELEASE</spring.version>
 		<junit.version>4.11</junit.version>
 		<jetty.version>6.1.10</jetty.version>
-		<compiler.srcversion>1.8</compiler.srcversion>
-		<compiler.tgtversion>1.8</compiler.tgtversion>
+		<compiler.srcversion>1.7</compiler.srcversion>
+		<compiler.tgtversion>1.7</compiler.tgtversion>
 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<port.number>8085</port.number>
