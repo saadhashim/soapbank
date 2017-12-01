@@ -6,16 +6,15 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeoutException;
 
 public class DBHelper {
 	private static String dbConnectionName = "jdbc:sqlite:bank.db";
 
-	public static void initDB() throws TimeoutException{
+	public static void initDB() throws Exception{
 		createTableIfNotExist();
 	}
 	
-	public static void executeUpdate(String sql) throws TimeoutException{
+	public static void executeUpdate(String sql) throws Exception{
 		Connection c = null;
 	    Statement stmt = null;
 	    try {
@@ -35,13 +34,13 @@ public class DBHelper {
 	      }catch(Exception ee){
 	    	  
 	      }finally{
-	    	  throw new TimeoutException("Databasen hinner inte med");
+	    	  throw new Exception("Databasen hinner inte med");
 	      }
 	    }
 	    System.out.println("SQL executed created successfully");
 	}
 	
-	private static void createTableIfNotExist() throws TimeoutException{
+	private static void createTableIfNotExist() throws Exception{
 		if(!isTableAlreadyCreted()){
 			  Connection c = null;
 			    Statement stmt = null;
@@ -70,7 +69,7 @@ public class DBHelper {
 			      }catch(Exception ee){
 			    	  
 			      }finally{
-			    	  throw new TimeoutException("Databasen hinner inte med");
+			    	  throw new Exception("Databasen hinner inte med");
 			      }
 			    }
 			    System.out.println("Table created successfully");
@@ -78,7 +77,7 @@ public class DBHelper {
 	}
 	
 	
-	  private static boolean isTableAlreadyCreted() throws TimeoutException
+	  private static boolean isTableAlreadyCreted() throws Exception
 	  {
 	    Connection c = null;
 	    Statement stmt = null;
@@ -105,12 +104,12 @@ public class DBHelper {
 	      }catch(Exception ee){
 	    	  
 	      }finally{
-	    	  throw new TimeoutException("Databasen hinner inte med");
+	    	  throw new Exception("Databasen hinner inte med");
 	      }
 	    }
 	  }
 	  
-	  private static int getNextId() throws TimeoutException{
+	  private static int getNextId() throws Exception{
 	      System.out.println("Getting the next id");
 
 		   Connection c = null;
@@ -138,13 +137,13 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new TimeoutException("Databasen hinner inte med");
+		    	  throw new Exception("Databasen hinner inte med");
 		      }
 		    }
 
 	  }
 	  
-	  private static boolean isCustomerExist(String name) throws TimeoutException, NullOrEmptyValueException{
+	  private static boolean isCustomerExist(String name) throws Exception{
 		  if(name == null || name.isEmpty()){
 			  throw new NullOrEmptyValueException();
 		  }
@@ -178,13 +177,13 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new TimeoutException("Databasen hinner inte med");
+		    	  throw new Exception("Databasen hinner inte med");
 		      }
 		    }
 	  }
 	  
 	  
-	  public static Customer createCustomer(String name) throws CustomerExistsFault, TimeoutException, NullOrEmptyValueException{
+	  public static Customer createCustomer(String name) throws Exception{
 		  if(name == null || name.isEmpty()){
 			  throw new NullOrEmptyValueException();
 		  }
@@ -197,7 +196,7 @@ public class DBHelper {
 	      return new Customer(name, 0);
 	  }
 	  
-	  public static Customer getBalance(String name) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException{
+	  public static Customer getBalance(String name) throws Exception{
 		  if(name == null || name.isEmpty()){
 			  throw new NullOrEmptyValueException();
 		  }
@@ -234,12 +233,12 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new TimeoutException("Databasen hinner inte med");
+		    	  throw new Exception("Databasen hinner inte med");
 		      }
 		    }
 	  }
 	
-	 public static Customer setBalance(String name, float balance) throws NoCustomerFound, TimeoutException, NullOrEmptyValueException{
+	 public static Customer setBalance(String name, float balance) throws Exception{
 		  if(name == null || name.isEmpty()){
 			  throw new NullOrEmptyValueException();
 		  }
@@ -251,7 +250,7 @@ public class DBHelper {
 		 return new Customer(name, balance);
 	 }
 	 
-	 public static Customer[] getCustomers() throws NoCustomerFound, TimeoutException
+	 public static Customer[] getCustomers() throws Exception
 	 {
 	      System.out.println("Getting all customers");
 		  Connection c = null;
@@ -281,7 +280,7 @@ public class DBHelper {
 		      }catch(Exception ee){
 		    	  
 		      }finally{
-		    	  throw new TimeoutException("Databasen hinner inte med");
+		    	  throw new Exception("Databasen hinner inte med");
 		      }
 		    }
 	 }

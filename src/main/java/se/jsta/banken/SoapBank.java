@@ -1,11 +1,8 @@
 package se.jsta.banken;
 
-import java.util.concurrent.TimeoutException;
-
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
-import javax.naming.AuthenticationException;
 
 @WebService
 public interface SoapBank {
@@ -19,9 +16,7 @@ public interface SoapBank {
     @WebMethod(operationName="getBalance")
     Customer getBalance(@WebParam(name="name") String name) throws Exception;
     @WebMethod(operationName="getCustomers")
-    Customer[] getCusomers() throws NoCustomerFound, Exception;
-    @WebMethod(operationName="getCustomersSecure")
-    Customer[] getCusomersSecure() throws Exception;
+    Customer[] getCusomers() throws Exception;
     @WebMethod(operationName="robTheBank")
     void robTheBank();
 }
