@@ -1,6 +1,9 @@
 runtime: java
 env: flex
 
+env_variables:
+  org.apache.cxf.jaxws.checkPublishEndpointPermission: 'false'
+
 handlers:
 - url: /.*
   script: this field is required, but ignored
