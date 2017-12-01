@@ -15,7 +15,7 @@ import org.apache.cxf.jaxws.context.WrappedMessageContext;
 import org.apache.cxf.message.Message;
 import org.w3c.dom.Element;
 
-@WebService(endpointInterface = "se.jsta.banken.soapbank")
+@WebService(endpointInterface = "se.jsta.banken.SoapBank")
 public class SoapBankImpl implements SoapBank {
 
 	public String sayHi(String text) throws Exception {
