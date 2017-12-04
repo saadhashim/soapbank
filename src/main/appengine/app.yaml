@@ -2,7 +2,7 @@ runtime: java
 env: flex
 
 env_variables:
-  JAVA_OPTS: -Dorg.apache.cxf.jaxws.checkPublishEndpointPermission=false
+  JAVA_OPTS: "-Dorg.apache.cxf.jaxws.checkPublishEndpointPermission=false"
 
 handlers:
 - url: /.*
@@ -10,4 +10,4 @@ handlers:
 
 runtime_config:
    jdk: openjdk8
-   server: jetty9
+   server: jetty8
