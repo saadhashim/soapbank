@@ -1,5 +1,5 @@
 runtime: java
-env: flex
+env: standard
 
 env_variables:
   JAVA_OPTS: "-Dorg.apache.cxf.jaxws.checkPublishEndpointPermission=false"
