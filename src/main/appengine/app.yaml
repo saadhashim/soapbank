@@ -2,7 +2,7 @@ runtime: java
 env: flex
 
 env_variables:
-  org.apache.cxf.jaxws.checkPublishEndpointPermission: 'false'
+  JAVA_OPTS: -Dorg.apache.cxf.jaxws.checkPublishEndpointPermission=false
 
 handlers:
 - url: /.*
